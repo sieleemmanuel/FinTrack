@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FinTrack</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="already_have_account">Already have an account? </string>
+    <string name="sign_in">Sign In</string>
+    <string name="accept_terms_desc">By pressing accept below you agree to our </string>
+    <string name="accept_policy_desc">. You can find out more about how we use your data in our Privacy Policy </string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="onboarding_title_0">Track Your\nExpenses</string>
+    <string name="onboarding_title_1">Set Savings\nGoals</string>
+    <string name="onboarding_title_2">Get Financial\nInsights</string>
+    <string name="onboarding_desc_0">Get insights into where your money goes and make informed financial decisions</string>
+    <string name="onboarding_desc_1">Whether it’s for a vacation, a new car, or an emergency fund, we help you stay on track.</string>
+    <string name="onboarding_desc_2">Access detailed reports and analytics to make better financial choices.</string>
+    <string name="accept_and_continue">Accept and Continue</string>
+</resources>
