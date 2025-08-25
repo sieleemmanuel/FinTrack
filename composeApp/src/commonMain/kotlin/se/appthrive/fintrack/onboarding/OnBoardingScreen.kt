@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextDecoration
@@ -54,9 +52,9 @@ import fintrack.composeapp.generated.resources.already_have_account
 import fintrack.composeapp.generated.resources.capriola_regular
 import fintrack.composeapp.generated.resources.create_an_account
 import fintrack.composeapp.generated.resources.ic_close
-import fintrack.composeapp.generated.resources.img_onboading_1
-import fintrack.composeapp.generated.resources.img_onboading_2
-import fintrack.composeapp.generated.resources.img_onboading_3
+import fintrack.composeapp.generated.resources.img_onboarding_0
+import fintrack.composeapp.generated.resources.img_onboarding_1
+import fintrack.composeapp.generated.resources.img_onboarding_2
 import fintrack.composeapp.generated.resources.onboarding_desc_0
 import fintrack.composeapp.generated.resources.onboarding_desc_1
 import fintrack.composeapp.generated.resources.onboarding_desc_2
@@ -66,7 +64,6 @@ import fintrack.composeapp.generated.resources.onboarding_title_2
 import fintrack.composeapp.generated.resources.privacy_policy
 import fintrack.composeapp.generated.resources.sign_in
 import fintrack.composeapp.generated.resources.terms_and_conditions
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -85,17 +82,17 @@ fun OnboardingScreen() {
         OnBoardingPageItem(
             stringResource(resource = Res.string.onboarding_title_0),
             stringResource(resource = Res.string.onboarding_desc_0),
-            Res.drawable.img_onboading_1
+            Res.drawable.img_onboarding_0
         ),
         OnBoardingPageItem(
             stringResource(resource = Res.string.onboarding_title_1),
             stringResource(resource = Res.string.onboarding_desc_1),
-            Res.drawable.img_onboading_2
+            Res.drawable.img_onboarding_1
         ),
         OnBoardingPageItem(
             stringResource(resource = Res.string.onboarding_title_2),
             stringResource(resource = Res.string.onboarding_desc_2),
-            Res.drawable.img_onboading_3
+            Res.drawable.img_onboarding_2
         )
     )
 
