@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +42,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,7 @@ import fintrack.composeapp.generated.resources.accept_and_continue
 import fintrack.composeapp.generated.resources.accept_policy_desc
 import fintrack.composeapp.generated.resources.accept_terms_desc
 import fintrack.composeapp.generated.resources.already_have_account
+import fintrack.composeapp.generated.resources.capriola_regular
 import fintrack.composeapp.generated.resources.create_an_account
 import fintrack.composeapp.generated.resources.ic_close
 import fintrack.composeapp.generated.resources.img_onboading_1
@@ -63,7 +66,9 @@ import fintrack.composeapp.generated.resources.onboarding_title_2
 import fintrack.composeapp.generated.resources.privacy_policy
 import fintrack.composeapp.generated.resources.sign_in
 import fintrack.composeapp.generated.resources.terms_and_conditions
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -105,8 +110,8 @@ fun OnboardingScreen() {
                 .fillMaxSize()
         ){
             Indicators(
-                modifier = Modifier.statusBarsPadding()
-                , pageCount = pages.size,
+                modifier = Modifier.statusBarsPadding(),
+                pageCount = pages.size,
                 selectedPage = { pagerState.currentPage }
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -154,7 +159,7 @@ fun Indicators(
 ){
     Row(
         modifier = modifier
-        .fillMaxWidth()
+            .fillMaxWidth()
             .padding(20.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ){
@@ -180,21 +185,23 @@ fun OnboardingPage(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ){
         Text(
             text = title,
             style = MaterialTheme.typography.headlineLarge,
+            fontFamily = FontFamily(Font(Res.font.capriola_regular)),
             color = MaterialTheme.colorScheme.onBackground
         )
-        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = description,
+            fontFamily = FontFamily(Font(Res.font.capriola_regular)),
             color = MaterialTheme.colorScheme.onBackground
         )
-        Spacer(modifier = Modifier.height(8.dp))
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .weight(1f),
             contentAlignment = Alignment.Center
         ) {
@@ -227,7 +234,10 @@ fun AuthActions(
                 containerColor = Color(0xFF008080),
             )
         ) {
-            Text(text = stringResource(Res.string.create_an_account))
+            Text(
+                text = stringResource(Res.string.create_an_account),
+                fontFamily = FontFamily(Font(Res.font.capriola_regular))
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         val annotatedString = buildAnnotatedString {
@@ -249,7 +259,10 @@ fun AuthActions(
                 append(stringResource(resource = Res.string.sign_in))
             }
         }
-        Text(text = annotatedString)
+        Text(
+            text = annotatedString,
+            fontFamily = FontFamily(Font(Res.font.capriola_regular))
+        )
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
@@ -314,7 +327,8 @@ fun AcceptTermsSheet(
             ){
                 Text(
                     text = stringResource(resource = Res.string.create_an_account),
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    fontFamily = FontFamily(Font(Res.font.capriola_regular))
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(
@@ -330,7 +344,10 @@ fun AcceptTermsSheet(
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = acceptAnnotated)
+            Text(
+                text = acceptAnnotated,
+                fontFamily = FontFamily(Font(Res.font.capriola_regular))
+            )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = onAccept,
@@ -339,7 +356,10 @@ fun AcceptTermsSheet(
                     containerColor = Color(0xFF008080),
                 )
             ) {
-                Text(text = stringResource(resource = Res.string.accept_and_continue))
+                Text(
+                    text = stringResource(resource = Res.string.accept_and_continue),
+                    fontFamily = FontFamily(Font(Res.font.capriola_regular))
+                )
             }
             Spacer(modifier = Modifier.height(12.dp))
         }
