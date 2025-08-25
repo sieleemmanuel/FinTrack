@@ -1,5 +1,6 @@
 package se.appthrive.fintrack.onboarding
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -76,7 +77,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview()
 fun OnboardingScreen() {
-    val pagerState = rememberPagerState (
+    val pagerState = rememberPagerState(
         pageCount = { 3 },
         initialPage = 0,
     )
@@ -103,11 +104,11 @@ fun OnboardingScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-        ){
+        ) {
             Indicators(
                 modifier = Modifier.statusBarsPadding(),
                 pageCount = pages.size,
@@ -119,7 +120,7 @@ fun OnboardingScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-            ){ pageIndex ->
+            ) { pageIndex ->
                 val page = pages[pageIndex]
                 OnboardingPage(
                     title = page.title,
@@ -137,7 +138,7 @@ fun OnboardingScreen() {
         }
     }
 
-    if (showAcceptTermsSheet){
+    if (showAcceptTermsSheet) {
         AcceptTermsSheet(
             onDismiss = { showAcceptTermsSheet = false },
             onAccept = {
@@ -155,22 +156,23 @@ fun Indicators(
     modifier: Modifier = Modifier,
     pageCount: Int,
     selectedPage: () -> Int
-){
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(20.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-        repeat(pageCount){ index ->
-            val indicatorColor = if (index == selectedPage()) Color.DarkGray else Color.LightGray
+    ) {
+        repeat(pageCount) { index ->
+            val animatedIndicator by animateColorAsState(targetValue = if (index == selectedPage()) Color.DarkGray else Color.LightGray)
             Box(
                 modifier = Modifier
                     .height(6.dp)
                     .weight(1f)
                     .clip(MaterialTheme.shapes.large)
-                    .background(color = indicatorColor)
-            )}
+                    .background(color = animatedIndicator)
+            )
+        }
     }
 }
 
@@ -180,13 +182,13 @@ fun OnboardingPage(
     title: String,
     description: String,
     image: DrawableResource
-){
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
+    ) {
         Text(
             text = title,
             style = MaterialTheme.typography.headlineLarge,
@@ -246,15 +248,15 @@ fun AuthActions(
                     tag = "SignIn",
                     styles = TextLinkStyles(
                         SpanStyle(
-                        color = Color(0xFF008080),
-                        textDecoration = TextDecoration.Underline
+                            color = Color(0xFF008080),
+                            textDecoration = TextDecoration.Underline
                         )
                     ),
                     linkInteractionListener = {
                         onSignIn()
                     }
                 )
-                ){
+            ) {
                 append(stringResource(resource = Res.string.sign_in))
             }
         }
@@ -274,7 +276,7 @@ fun AcceptTermsSheet(
     onAccept: () -> Unit,
     onViewTerms: () -> Unit,
     onViewPrivacyPolicy: () -> Unit
-){
+) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = {
@@ -291,7 +293,7 @@ fun AcceptTermsSheet(
                     onViewTerms()
                 }
             )
-        ){
+        ) {
             append(stringResource(resource = Res.string.terms_and_conditions))
         }
         append(stringResource(resource = Res.string.accept_policy_desc))
@@ -303,7 +305,7 @@ fun AcceptTermsSheet(
                     onViewPrivacyPolicy()
                 }
             )
-        ){
+        ) {
             append(stringResource(resource = Res.string.privacy_policy))
         }
     }
@@ -320,7 +322,7 @@ fun AcceptTermsSheet(
             onDismiss()
         },
         dragHandle = null
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -330,7 +332,7 @@ fun AcceptTermsSheet(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
                 Text(
                     text = stringResource(resource = Res.string.create_an_account),
                     style = MaterialTheme.typography.titleLarge,
@@ -342,7 +344,7 @@ fun AcceptTermsSheet(
                     colors = IconButtonDefaults.iconButtonColors(
                         containerColor = Color.LightGray
                     )
-                    ) {
+                ) {
                     Icon(
                         painter = painterResource(resource = Res.drawable.ic_close),
                         contentDescription = "Close"
