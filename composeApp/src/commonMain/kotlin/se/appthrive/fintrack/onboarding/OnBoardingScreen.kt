@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,6 +65,7 @@ import fintrack.composeapp.generated.resources.onboarding_title_2
 import fintrack.composeapp.generated.resources.privacy_policy
 import fintrack.composeapp.generated.resources.sign_in
 import fintrack.composeapp.generated.resources.terms_and_conditions
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -305,6 +307,13 @@ fun AcceptTermsSheet(
             append(stringResource(resource = Res.string.privacy_policy))
         }
     }
+    val scope = rememberCoroutineScope()
+    fun animatedSheetDismissal(onDismissAction: () -> Unit = {}) = scope.launch {
+        sheetState.hide()
+    }.invokeOnCompletion {
+        onDismissAction()
+    }
+
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = {
@@ -329,7 +338,7 @@ fun AcceptTermsSheet(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(
-                    onClick = { onDismiss() },
+                    onClick = { animatedSheetDismissal { onDismiss() } },
                     colors = IconButtonDefaults.iconButtonColors(
                         containerColor = Color.LightGray
                     )
@@ -347,7 +356,7 @@ fun AcceptTermsSheet(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = onAccept,
+                onClick = { animatedSheetDismissal { onAccept() } },
                 modifier = modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF008080),
