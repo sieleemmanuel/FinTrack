@@ -32,23 +32,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import fintrack.composeapp.generated.resources.Res
+import fintrack.composeapp.generated.resources.app_name
 import fintrack.composeapp.generated.resources.capriola_regular
-import fintrack.composeapp.generated.resources.img_onboarding_0
-import fintrack.composeapp.generated.resources.img_onboarding_1
-import fintrack.composeapp.generated.resources.img_onboarding_2
+import fintrack.composeapp.generated.resources.create_a_saving_goal
+import fintrack.composeapp.generated.resources.create_a_saving_goal_desc
+import fintrack.composeapp.generated.resources.img_digital_wallet
+import fintrack.composeapp.generated.resources.img_growing_money
+import fintrack.composeapp.generated.resources.img_trading_app
+import fintrack.composeapp.generated.resources.lets_get_you_setup
+import fintrack.composeapp.generated.resources.link_bank_account
+import fintrack.composeapp.generated.resources.link_bank_account_desc
+import fintrack.composeapp.generated.resources.setup_a_pin
+import fintrack.composeapp.generated.resources.setup_a_pin_desc
+import fintrack.composeapp.generated.resources.skip_for_now
+import fintrack.composeapp.generated.resources.welcome_to
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
-fun GettingStartedScreen() {
+fun GettingStartedScreen(
+    onSkipForNow: () -> Unit = {},
+    onSetupItemClick: (SetupItem) -> Unit = {}
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
+                .navigationBarsPadding()
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             WelcomeText(
@@ -58,39 +73,45 @@ fun GettingStartedScreen() {
                     .padding(horizontal = 20.dp)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            SetupItems(modifier = Modifier.fillMaxWidth().weight(1f))
+            SetupItems(
+                modifier = Modifier.fillMaxWidth().weight(1f),
+                onItemClick = onSetupItemClick
+            )
             Button(
-                onClick = {},
+                onClick = onSkipForNow,
                 modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .navigationBarsPadding(),
+                    .padding(horizontal = 20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF008080),
                 )
             ) {
                 Text(
-                    text = "Skip for now",
+                    text = stringResource(Res.string.skip_for_now),
                     fontFamily = FontFamily(Font(Res.font.capriola_regular))
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
         }
     }
 }
 
 @Composable
 private fun WelcomeText(modifier: Modifier = Modifier) {
-    val annotatedString = buildAnnotatedString {
-        append(text = "Welcome to ")
+    val annotatedWelcomeString = buildAnnotatedString {
+        append(text = stringResource(Res.string.welcome_to))
+        append(" ")
         withStyle(
             style = SpanStyle(fontWeight = FontWeight.Normal, color = Color(0xFF008080))
         ) {
-            append("Fintrack")
+            append(stringResource(Res.string.app_name))
         }
-        append("!\nLet's get you set up.")
+        append("!\n")
+        append(stringResource(Res.string.lets_get_you_setup))
     }
     Text(
-        text = annotatedString,
+        text = annotatedWelcomeString,
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.W400,
         fontFamily = FontFamily(Font(Res.font.capriola_regular)),
@@ -99,22 +120,25 @@ private fun WelcomeText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SetupItems(modifier: Modifier = Modifier) {
+private fun SetupItems(
+    modifier: Modifier = Modifier,
+    onItemClick: (SetupItem) -> Unit
+) {
     val setupItems = listOf(
         SetupItem(
-            title = "Setup a pin",
-            description = "Enhance your account security.",
-            image = Res.drawable.img_onboarding_0
+            title = stringResource(Res.string.setup_a_pin),
+            description = stringResource(Res.string.setup_a_pin_desc),
+            image = Res.drawable.img_digital_wallet
         ),
         SetupItem(
-            title = "Link your bank accounts",
-            description = "Link your bank accounts to start tracking your expenses.",
-            image = Res.drawable.img_onboarding_1
+            title = stringResource(Res.string.link_bank_account),
+            description = stringResource(Res.string.link_bank_account_desc),
+            image = Res.drawable.img_trading_app
         ),
         SetupItem(
-            title = "Create a savings goal",
-            description = "What are your financial goals?",
-            image = Res.drawable.img_onboarding_2
+            title = stringResource(Res.string.create_a_saving_goal),
+            description = stringResource(Res.string.create_a_saving_goal_desc),
+            image = Res.drawable.img_growing_money
         )
     )
     Box(modifier = modifier) {
@@ -124,36 +148,34 @@ private fun SetupItems(modifier: Modifier = Modifier) {
                 .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            repeat(setupItems.size) { index ->
-                SetupItemCard(setupItem = setupItems[index])
+            setupItems.forEach{ item ->
+                SetupItemCard(
+                    setupItem = item,
+                    onClick = {
+                      onItemClick(item)
+                    }
+                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-
         }
     }
 }
 
-@Preview()
 @Composable
 private fun SetupItemCard(
-    setupItem: SetupItem = SetupItem(
-        title = "Setup Item",
-        description = "Description of the setup item.",
-        image = Res.drawable.img_onboarding_1
-    ),
-    onClick: () -> Unit = {}
+    setupItem: SetupItem,
+    onClick: () -> Unit
 ) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
+        modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.small,
         shadowElevation = 4.dp,
-        color = MaterialTheme.colorScheme.surface
+        color = Color(0xFFFAFAFA)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable { onClick() }
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
