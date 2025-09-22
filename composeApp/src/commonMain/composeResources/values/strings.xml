@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinTrack</string>
+    <string name="app_name">Fintrack</string>
     <string name="create_an_account">Create an account</string>
     <string name="already_have_account">Already have an account? </string>
     <string name="sign_in">Sign In</string>
@@ -14,4 +14,16 @@
     <string name="onboarding_desc_1">Whether it’s for a vacation, a new car, or an emergency fund, we help you stay on track.</string>
     <string name="onboarding_desc_2">Access detailed reports and analytics to make better financial choices.</string>
     <string name="accept_and_continue">Accept and Continue</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="lets_get_you_setup">Let's get you set up.</string>
+    <string name="setup_a_pin">Setup a pin</string>
+    <string name="setup_a_pin_desc">Enhance your account security.</string>
+    <string name="link_bank_account">Link your bank accounts</string>
+    <string name="link_bank_account_desc">Link your bank accounts to start tracking your expenses.</string>
+    <string name="create_a_saving_goal">Create a savings goal.</string>
+    <string name="create_a_saving_goal_desc">What are your financial goals?</string>
+    <string name="skip_for_now">Skip for now</string>
+    <string name="create_your_passcode">Create your passcode</string>
+    <string name="create_your_passcode_desc">For a more secure and convenient way to view your account, create a 4-digit passcode now.</string>
+    <string name="create_a_pin">Create a Pin</string>
 </resources>
