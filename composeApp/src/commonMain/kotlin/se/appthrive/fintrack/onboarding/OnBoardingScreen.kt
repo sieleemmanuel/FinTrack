@@ -26,9 +26,11 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,10 +74,10 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import se.appthrive.fintrack.composables.PrimaryButton
 
 
 @Composable
-@Preview()
 fun OnboardingScreen() {
     val pagerState = rememberPagerState(
         pageCount = { 3 },
@@ -228,19 +230,11 @@ fun AuthActions(
             .navigationBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = onCreateAccount,
-            modifier = modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF008080),
-            )
-        ) {
-            Text(
-                text = stringResource(Res.string.create_an_account),
-                fontFamily = FontFamily(Font(Res.font.capriola_regular))
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
+        PrimaryButton(
+            text = stringResource(resource = Res.string.create_an_account),
+         onClick = onCreateAccount
+        )
+        Spacer(modifier = Modifier.height(10.dp))
         val annotatedString = buildAnnotatedString {
             append(text = stringResource(resource = Res.string.already_have_account))
             withLink(
@@ -374,6 +368,15 @@ fun AcceptTermsSheet(
     }
 }
 
+@Preview
+@Composable
+fun OnBoardingScreenScreenPreview() {
+    Surface {
+        OnboardingScreen()
+    }
+}
+
+@Immutable
 data class OnBoardingPageItem(
     val title: String,
     val description: String,

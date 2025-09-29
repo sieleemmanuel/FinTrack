@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import fintrack.composeapp.generated.resources.Res
 import fintrack.composeapp.generated.resources.app_name
 import fintrack.composeapp.generated.resources.capriola_regular
+import fintrack.composeapp.generated.resources.create_a_pin
 import fintrack.composeapp.generated.resources.create_a_saving_goal
 import fintrack.composeapp.generated.resources.create_a_saving_goal_desc
 import fintrack.composeapp.generated.resources.img_digital_wallet
@@ -51,6 +52,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import se.appthrive.fintrack.composables.PrimaryButton
 
 
 @Composable
@@ -77,19 +79,13 @@ fun GettingStartedScreen(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 onItemClick = onSetupItemClick
             )
-            Button(
-                onClick = onSkipForNow,
-                modifier = Modifier.fillMaxWidth()
+            PrimaryButton(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 20.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF008080),
-                )
-            ) {
-                Text(
-                    text = stringResource(Res.string.skip_for_now),
-                    fontFamily = FontFamily(Font(Res.font.capriola_regular))
-                )
-            }
+                text = stringResource(resource = Res.string.skip_for_now),
+                onClick = onSkipForNow
+            )
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
