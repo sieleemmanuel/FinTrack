@@ -26,4 +26,5 @@
     <string name="create_your_passcode">Create your passcode</string>
     <string name="create_your_passcode_desc">For a more secure and convenient way to view your account, create a 4-digit passcode now.</string>
     <string name="create_a_pin">Create a Pin</string>
+    <string name="delete_pin_label">delete</string>
 </resources>
