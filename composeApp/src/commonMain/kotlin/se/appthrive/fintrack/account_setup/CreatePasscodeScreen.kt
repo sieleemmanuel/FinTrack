@@ -46,12 +46,14 @@ import fintrack.composeapp.generated.resources.capriola_regular
 import fintrack.composeapp.generated.resources.create_a_pin
 import fintrack.composeapp.generated.resources.create_your_passcode
 import fintrack.composeapp.generated.resources.create_your_passcode_desc
+import fintrack.composeapp.generated.resources.delete_pin_label
 import fintrack.composeapp.generated.resources.ic_chevron_left
 import fintrack.composeapp.generated.resources.ic_delete_pin
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import se.appthrive.fintrack.composables.PrimaryButton
 
 @Composable
 fun CreatePasscodeScreen(
@@ -83,22 +85,13 @@ fun CreatePasscodeScreen(
                     .weight(1f)
                     .padding(horizontal = 20.dp)
             )
-            Button(
-                onClick = {/*TODO*/ },
+            PrimaryButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = 20.dp
-                    ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF008080),
-                )
-            ) {
-                Text(
-                    text = stringResource(Res.string.create_a_pin),
-                    fontFamily = FontFamily(Font(Res.font.capriola_regular))
-                )
-            }
+                    .padding(horizontal = 20.dp),
+                text = stringResource(resource = Res.string.create_a_pin),
+                onClick = { /*TODO*/}
+            )
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -151,6 +144,7 @@ fun PinForm(modifier: Modifier = Modifier) {
                     repeat(4) { index ->
                         PinDigitBox(
                             digit = if (index < pin.length) pin[index] else 'O',
+                            isFocus = { index == pin.length }
                         )
                         if (index < 3) Spacer(modifier = Modifier.width(10.dp))
                     }
@@ -180,16 +174,20 @@ fun PinForm(modifier: Modifier = Modifier) {
 @Composable
 fun PinDigitBox(
     digit: Char = 'O',
+    isFocus: () -> Boolean = { false }
 ) {
     val textColor by animateColorAsState(
         if (digit == 'O') Color(0xFFCECFD2) else Color(0xFF161B26)
+    )
+    val borderColor by animateColorAsState(
+        if (isFocus()) Color(0xFF008080) else Color(0xFFCECFD2)
     )
     Box(
         modifier = Modifier
             .size(72.dp)
             .border(
                 width = 1.dp,
-                color = Color(0xFFCECFD2),
+                color = borderColor,
                 shape = RoundedCornerShape(4.dp)
             )
     ) {
@@ -212,27 +210,23 @@ fun PinButtons(
     onDigitClick: (String) -> Unit = {},
     onDeleteClick: () -> Unit = {}
 ) {
-    val firstRow = listOf("1", "2", "3")
-    val secondRow = listOf("4", "5", "6")
-    val thirdRow = listOf("7", "8", "9")
-    val fourthRow = listOf(".", "0", "delete")
+    val buttonsRows = listOf(
+        listOf("1", "2", "3"),
+        listOf("4", "5", "6"),
+        listOf("7", "8", "9"),
+        listOf(".", "0", "delete")
+    )
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        repeat(4) { index ->
+        buttonsRows.forEach { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val rowDigits = when (index) {
-                    0 -> firstRow
-                    1 -> secondRow
-                    2 -> thirdRow
-                    else -> fourthRow
-                }
-                rowDigits.forEach { digit ->
+                row.forEach { digit ->
                     PinFormButton(
                         modifier = Modifier.weight(1f),
                         value = digit,
@@ -258,7 +252,7 @@ private fun PinFormButton(
         color = btnColor
     ) {
         when {
-            value == "delete" -> {
+            value == stringResource(resource = Res.string.delete_pin_label) -> {
                 IconButton(
                     onClick = onDeleteClick,
                     modifier = Modifier.fillMaxWidth()
